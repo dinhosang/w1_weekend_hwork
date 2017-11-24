@@ -19,3 +19,8 @@ def pets_sold(shop_details)
   total_sold = shop_details[:admin][:pets_sold]
   return total_sold
 end
+
+
+def increase_pets_sold(shop_details, number_just_sold)
+  shop_details[:admin][:pets_sold] += number_just_sold
+end
