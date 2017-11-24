@@ -76,3 +76,9 @@ def customer_pet_count(customer_to_check)
   cust_pet_amount_array = customer_to_check[:pets]
   return cust_pet_amount_array.size()
 end
+
+
+def add_pet_to_customer(customer, new_pet)
+  customer_pets = customer[:pets]
+  customer_pets.push(new_pet)
+end
