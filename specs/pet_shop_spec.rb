@@ -214,16 +214,51 @@ class TestPetShop < Minitest::Test
     assert_equal(expected_cust_wallet, actual_cust_wallet)
   end
 
-# extra testing - for removing customer money
-  def test_remove_cash_from_customer
+# extra testing - for removing customer money, removing
+# pet, and purchasing pet from customer
+
+  # below commented out due to changing function name to reflect widened purpose
+  # new function test is detailed directly below this commented out funcion
+  # def test_remove_cash_from_customer
+  #   customer = @customers[0]
+  #   cost_of_pet = 200
+  #   expectd = 800
+  #   remove_cash_from_customer(customer, cost_of_pet)
+  #   customer_wallet = customer[:cash]
+  #   assert_equal(800, customer_wallet)
+  #   # to reset for other tests - turns out it's not needed?
+  #   # due to def setup made at start of class
+  #   #customer[:cash] += 200
+  # end
+
+
+  def test_change_customer_wallet_amount
     customer = @customers[0]
     cost_of_pet = 200
     expectd = 800
-    remove_cash_from_customer(customer, cost_of_pet)
+    affect_to_customer_wallet = cost_of_pet * (-1)
+    change_customer_wallet_amount(customer, affect_to_customer_wallet)
     customer_wallet = customer[:cash]
     assert_equal(800, customer_wallet)
-    # to reset for other tests - turns out it's not needed?
-    # due to def setup made at start of class
-    #customer[:cash] += 200
+  end
+
+
+  def test_purchase_animal_from_customer
+    customer = @customers[1]
+    pet = @new_pet
+    shop = @pet_shop
+    add_pet_to_customer(customer, pet)
+
+    purchase_animal_from_customer(customer, pet, shop)
+
+    customer_wallet = customer[:cash]
+    shop_balance = total_cash(@pet_shop)
+    checking_pet_in_shop = find_pet_by_name(@pet_shop, "Bors the Younger")
+    checking_pet_with_customer = find_pet_by_name(customer, "Bors the Younger")
+
+    assert_nil(checking_pet_with_customer)
+    assert_equal(150, customer_wallet)
+    assert_equal(pet, checking_pet_in_shop)
+    assert_equal(900, shop_balance)
   end
 end
