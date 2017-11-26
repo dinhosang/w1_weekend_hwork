@@ -283,6 +283,22 @@ class TestPetShop < Minitest::Test
 
 
   def test_purchase_animal_from_customer__insufficient_funds
+    customer = @customers[1]
+    pet = @new_pet
+    shop = @pet_shop
+    add_pet_to_customer(customer, pet)
+    shop[:admin][:total_cash] = 95
 
+    purchase_animal_from_customer(customer, pet, shop)
+
+    customer_wallet = customer[:cash]
+    shop_balance = total_cash(@pet_shop)
+    checking_pet_in_shop = find_pet_by_name(@pet_shop, "Bors the Younger")
+    checking_pet_with_customer = find_pet_by_name(customer, "Bors the Younger")
+
+    assert_nil(checking_pet_in_shop)
+    assert_equal(pet, checking_pet_with_customer)
+    assert_equal(50, customer_wallet)
+    assert_equal(95, shop_balance)
   end
 end
