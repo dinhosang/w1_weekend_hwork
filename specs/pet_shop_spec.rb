@@ -172,12 +172,16 @@ class TestPetShop < Minitest::Test
   def test_sell_pet_to_customer__pet_found
     customer = @customers[0]
     pet = find_pet_by_name(@pet_shop,"Arthur")
-
     sell_pet_to_customer(@pet_shop, pet, customer)
 
     assert_equal(1, customer_pet_count(customer))
     assert_equal(1, pets_sold(@pet_shop))
     assert_equal(1900, total_cash(@pet_shop))
+    # additional test for changing customer wallet
+    pet_cost = pet[:price]
+    expected_cust_wallet = 100
+    actual_cust_wallet = customer[:cash]
+    assert_equal(expected_cust_wallet, actual_cust_wallet)
   end
 
   def test_sell_pet_to_customer__pet_not_found
@@ -189,6 +193,10 @@ class TestPetShop < Minitest::Test
     assert_equal(0, customer_pet_count(customer))
     assert_equal(0, pets_sold(@pet_shop))
     assert_equal(1000, total_cash(@pet_shop))
+    # additional test for changing customer wallet
+    expected_cust_wallet = 1000
+    actual_cust_wallet = customer[:cash]
+    assert_equal(expected_cust_wallet, actual_cust_wallet)
   end
 
   def test_sell_pet_to_customer__insufficient_funds
@@ -200,6 +208,22 @@ class TestPetShop < Minitest::Test
     assert_equal(0, customer_pet_count(customer))
     assert_equal(0, pets_sold(@pet_shop))
     assert_equal(1000, total_cash(@pet_shop))
+    # additional test for changing customer wallet
+    expected_cust_wallet = 50
+    actual_cust_wallet = customer[:cash]
+    assert_equal(expected_cust_wallet, actual_cust_wallet)
   end
 
+# extra testing - for removing customer money
+  def test_remove_cash_from_customer
+    customer = @customers[0]
+    cost_of_pet = 200
+    expectd = 800
+    remove_cash_from_customer(customer, cost_of_pet)
+    customer_wallet = customer[:cash]
+    assert_equal(800, customer_wallet)
+    # to reset for other tests - turns out it's not needed?
+    # due to def setup made at start of class
+    #customer[:cash] += 200
+  end
 end
