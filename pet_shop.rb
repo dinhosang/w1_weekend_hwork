@@ -130,9 +130,12 @@ def purchase_animal_from_customer(customer, pet, shop_details)
     pet_name = pet[:name]
     pet_price = pet[:price]
     change_to_shop_account = pet_price * (-1)
+    checking_pet_with_customer = find_pet_by_name(customer, pet_name)
 
-    change_customer_wallet_amount(customer, pet_price)
-    remove_pet_by_name(customer, pet_name)
-    add_pet_to_stock(shop_details, pet)
-    add_or_remove_cash(shop_details, change_to_shop_account)
+    if checking_pet_with_customer != nil
+      change_customer_wallet_amount(customer, pet_price)
+      remove_pet_by_name(customer, pet_name)
+      add_pet_to_stock(shop_details, pet)
+      add_or_remove_cash(shop_details, change_to_shop_account)
+    end
 end
