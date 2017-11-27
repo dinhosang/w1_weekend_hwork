@@ -301,4 +301,6 @@ class TestPetShop < Minitest::Test
     assert_equal(50, customer_wallet)
     assert_equal(95, shop_balance)
   end
+
+  
 end

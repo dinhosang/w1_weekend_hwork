@@ -97,7 +97,7 @@ def customer_can_afford_pet(customer, new_pet)
 end
 
 
-#new function for changin customer wallet total
+#new function for changing customer wallet total
 #def remove_cash_from_customer(customer, cost_of_pet)
 #  customer[:cash] -= cost_of_pet
 #end
