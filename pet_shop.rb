@@ -90,6 +90,9 @@ end
 def customer_can_afford_pet(customer, new_pet)
   available_cash = customer[:cash]
   pet_cost = new_pet[:price]
+  # should be less than or equal
+  # can write below in one line
+  # return pet_cost <= available_cash
   if pet_cost < available_cash
     return true
   end
